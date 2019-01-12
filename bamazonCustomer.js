@@ -15,20 +15,16 @@ var connection = mysql.createConnection({
     password: "Pharmacy420!",
     database: "bamazon"
 });
-
-// connect to the mysql server and sql database
 connection.connect(function (err) {
     if (err) throw err;
-    // run the start function after the connection is made to prompt the user
-    bidAuction();
+    browseProducts();
 });
 
-function bidAuction() {
-    // query the database for all items being auctioned
+function browseProducts() {
     connection.query("SELECT * FROM products", function (err, results) {
         if (err) throw err;
         console.log(results);
-        // once you have the items, prompt the user for which they'd like to bid on
+        // creates item list for users to select to purchase
         inquirer
             .prompt([
                 {
@@ -99,7 +95,7 @@ function quitBuy() {
         })
         .then(function (answer) {
             if (answer.choices === "Yes") {
-                bidAuction();
+                browseProducts();
             }
             else {
                 console.log("Goodbye for now!");

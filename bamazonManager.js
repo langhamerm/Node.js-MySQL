@@ -19,7 +19,6 @@ var connection = mysql.createConnection({
 // connect to the mysql server and sql database
 connection.connect(function (err) {
     if (err) throw err;
-    // run the start function after the connection is made to prompt the user
     managerOptions();
 });
 
@@ -108,7 +107,7 @@ function viewProducts() {
     });
 }
 function addInventory() {
-     // prompt for info about the item being put up for auction
+    //ask user which product to add stock to
   inquirer
   .prompt([
     {
@@ -123,7 +122,6 @@ function addInventory() {
     }
   ])
   .then(function(answer) {
-    // when finished prompting, insert a new item into the db with that info
     connection.query(
       "UPDATE products SET ? WHERE ?",
      [ {
@@ -143,7 +141,7 @@ function addInventory() {
   });
 }
 function addProduct() {
-    // prompt for info about the item being put up for auction
+    // user enters information about new product
     inquirer
       .prompt([
         {
@@ -168,7 +166,7 @@ function addProduct() {
           }
       ])
       .then(function(answer) {
-        // when finished prompting, insert a new item into the db with that info
+        // add user input into databse
         connection.query(
           "INSERT INTO products SET ?",
           {
@@ -180,7 +178,6 @@ function addProduct() {
           function(err) {
             if (err) throw err;
             console.log("Your product was added successfully!");
-            // re-prompt the user for if they want to bid or post
             managerOptions();
           }
         );
